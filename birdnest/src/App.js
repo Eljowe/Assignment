@@ -10,19 +10,15 @@ function App() {
     XMLDrones.DroneData().then(response => {
       var xml = new XMLParser().parseFromString(response)
       setDroneData(xml.children['1'].children);
-      console.log(xml.children['1'].children)
     });
   }, []);
   return (
     <div>
       <p>Hello world</p>
       <ul>
-        {Object.keys(droneData).map(drone => {
-          <li key={droneData[drone].children[0].value}>{droneData[drone].children[0].value}</li>
-          console.log(droneData[drone].children[0].value)
-          console.log(droneData[drone].children['7'].value) // Y-coordinate
-          console.log(droneData[drone].children['8'].value) // X-coordinate
-        })}
+        {Object.keys(droneData).map(drone => 
+          <li key={droneData[drone].children[0].value}>{droneData[drone].children[0].value} y: {droneData[drone].children['7'].value} x: {droneData[drone].children['8'].value}</li>
+        )}
       </ul>
     </div>
   );
