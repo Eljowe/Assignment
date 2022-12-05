@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
-import XMLDrones from "./services/XMLDrones.js";
+import DroneService from "./services/DroneService";
 import XMLParser from 'react-xml-parser';
 
 function App() {
   const [droneData, setDroneData] = useState('');
 
   useEffect(() => {
-    XMLDrones.DroneData().then(response => {
-      var xml = new XMLParser().parseFromString(response)
-      setDroneData(xml.children['1'].children);
+    DroneService.DroneData().then(response => {
+      var xml = new XMLParser().parseFromString(response) //Response XML-data to array
+      setDroneData(xml.children['1'].children); //set list of drones to variable
     });
   }, []);
   return (
