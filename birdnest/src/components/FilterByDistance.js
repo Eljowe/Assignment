@@ -6,7 +6,7 @@ const distanceToNest = (droneData, drone) => {
 
 const FilterInsideNDZ = (droneData) => {
     const filteredDrones = Object.keys(droneData)
-    .filter(drone => droneData[drone].closestToNest < 200000)
+    .filter(drone => droneData[drone].closestToNest < 100000)
     .reduce((cur, drone) => { return Object.assign(cur, { [drone]: droneData[drone] })}, []);
     return filteredDrones //return array with drones inside NDZ
 };
@@ -16,12 +16,17 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
         const result = Object.keys(droneData)
         .map(drone => {
             const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber);
-
-            if (index === -1) {
+            if (index === -1) { //add 
                 TenMinuteData.push(droneData[drone]);
+            } else {
+                if (droneData[drone].closestToNest < TenMinuteData[index].closestToNest) { //
+                    TenMinuteData[index].closestToNest=droneData[drone].closestToNest
+                }
             }
         })
     }
+    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].firstSeen > 60000)
+    //console.log(result)
     return TenMinuteData;
 };
 

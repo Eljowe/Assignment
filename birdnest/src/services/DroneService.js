@@ -14,6 +14,7 @@ const DroneData = () => {
 
 const DroneDataObject = (droneData, time) => {
   const obj = []
+  console.log(time)
   Object.keys(droneData).map(drone => 
     obj.push(
       {
