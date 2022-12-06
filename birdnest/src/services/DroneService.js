@@ -1,12 +1,10 @@
-import React ,{ useEffect, useState} from "react";
 import axios from 'axios'
-import XMLParser from 'react-xml-parser';
 import FilterByDistance from "../components/FilterByDistance";
 
 //https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones'
 //https://damp-oasis-94494.herokuapp.com/assignments.reaktor.com/birdnest/drones
 const DroneData = () => {
-  const res = axios
+  const res = axios //the XML data is fetched from custom proxy, as the original server had CORS-policy trouble
     .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones',
     {
       "Content-Type": "application/xml; charset=utf-8"
@@ -21,7 +19,7 @@ const DroneDataObject = (droneData, time) => {
       {
         serialNumber: droneData[drone].children['0'].value,
         closestToNest: FilterByDistance.distanceToNest(droneData, drone),
-        firstSeen: time,
+        firstSeen: Date.parse(time),
         x: droneData[drone].children['8'].value,
         y: droneData[drone].children['7'].value,
       }

@@ -1,5 +1,4 @@
 import React from "react";
-import FilterByDistance from "./FilterByDistance";
 
 const DroneListItem = ({droneData, drone}) => {
     return(
