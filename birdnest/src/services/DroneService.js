@@ -13,6 +13,10 @@ const DroneData = () => {
     return res.then(response => response.data);
 };
 
+const DroneDataStorage = (droneData) => {
+  
+};
+
 export default {
   DroneData: DroneData,
 };
