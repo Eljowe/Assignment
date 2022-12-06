@@ -1,6 +1,6 @@
 import DroneService from "../services/DroneService";
 
-const distanceToNest = (droneData, drone) => {
+const distanceToNest = (droneData, drone) => { //simple formula to calculate distance between drone and nest
     return Math.sqrt(Math.pow(250000-droneData[drone].children['8'].value, 2)+Math.pow(250000-droneData[drone].children['7'].value, 2)) //simple formula of distance between two points
 };
 
@@ -39,7 +39,7 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
                         TenMinuteData[index].closestToNest=droneData[drone].closestToNest
                     }
                 }
-    }})
+        }})
     }
     return TenMinuteFilter(TenMinuteData, time);
 };
