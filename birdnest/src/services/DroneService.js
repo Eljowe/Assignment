@@ -9,6 +9,12 @@ const DroneData = () => {
     return res.then(response => response.data);
 };
 
+const PilotInformation = async (serialNumber) => {
+  const res = await axios
+    .get(`https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
+    return await res.data;
+};
+
 const DroneDataObject = (droneData, time) => {
   const obj = []
   Object.keys(droneData).map(drone => 
@@ -19,21 +25,15 @@ const DroneDataObject = (droneData, time) => {
         lastSeen: time,
         x: droneData[drone].children['8'].value,
         y: droneData[drone].children['7'].value,
+        pilotInformation: null
       }
     )
   )
   return obj;
 };
 
-const PilotInformation = async (serialNumber) => {
-  console.log(serialNumber)
-  const res = await axios
-    .get(`https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
-    return res.data;
-}
-
 export default {
   DroneData: DroneData,
   DroneDataObject: DroneDataObject,
-  PilotInformation, PilotInformation
+  PilotInformation: PilotInformation
 };

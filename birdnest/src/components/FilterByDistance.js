@@ -1,4 +1,5 @@
 import React from "react";
+import DroneService from "../services/DroneService";
 
 const distanceToNest = (droneData, drone) => {
     return Math.sqrt(Math.pow(250000-droneData[drone].children['8'].value, 2)+Math.pow(250000-droneData[drone].children['7'].value, 2)) //simple formula of distance between two points
@@ -12,7 +13,7 @@ const FilterInsideNDZ = (droneData) => {
 };
 
 const TenMinuteFilter = (TenMinuteData, time) => {
-    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].lastSeen < 60000)
+    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].lastSeen < 600000)
     .reduce((cur, drone) => { return Object.assign(cur, { [drone]: TenMinuteData[drone] })}, []);
     return result;
 }
@@ -25,6 +26,10 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
             if (!TenMinuteData.includes(undefined)) {
                 const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber)
                 if (index === -1) { //Drone isn't in the ten minute buffer list and is therefore added
+                    DroneService.PilotInformation(droneData[drone].serialNumber)
+                    .then(response => {
+                        droneData[drone].pilotInformation = response;
+                    })
                     TenMinuteData.push(droneData[drone]);
                 } else {
                     TenMinuteData[index].lastSeen = time; //if the drone is in NDZ, the 10 minute timer is reseted
