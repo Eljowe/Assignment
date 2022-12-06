@@ -11,7 +11,20 @@ const FilterInsideNDZ = (droneData) => {
     return result //return array with drones inside NDZ
 };
 
+const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
+    const result = Object.keys(droneData)
+    .map(drone => {
+        const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber);
+
+        if (index === -1) {
+        TenMinuteData.push(droneData[drone]);
+        }
+    })
+    console.log(TenMinuteData)
+};
+
 export default {
     FilterInsideNDZ: FilterInsideNDZ,
-    distanceToNest: distanceToNest
+    distanceToNest: distanceToNest,
+    DronesInNDZ10Minutes: DronesInNDZ10Minutes
 };

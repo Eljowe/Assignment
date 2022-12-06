@@ -5,9 +5,10 @@ import ListComponent from "./components/ListDrones";
 import FilterByDistance from "./components/FilterByDistance";
 
 function App() {
-  const [droneData, setDroneData] = useState('');
-  const [insideNDZ, setInsideNDZ] = useState({});
+  const [droneData, setDroneData] = useState([]);
+  const [insideNDZ, setInsideNDZ] = useState([]);
   const [time, setTime] = useState();
+  const [TenMinuteData, setTenMinuteData] = useState([])
 
   useEffect(() => {
     const updateDroneData = setInterval(()=> {
@@ -23,8 +24,7 @@ function App() {
     clearInterval(updateDroneData);
     };
   }, []);
-
-
+  FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time)
   return (
     <div>
       <p>Time: {time}</p>
