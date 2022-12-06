@@ -5,10 +5,10 @@ import ListComponent from "./components/ListDrones";
 import FilterByDistance from "./components/FilterByDistance";
 
 function App() {
-  const [droneData, setDroneData] = useState([]);
-  const [insideNDZ, setInsideNDZ] = useState([]);
-  const [time, setTime] = useState();
-  const [TenMinuteData, setTenMinuteData] = useState([])
+  const [droneData, setDroneData] = useState([]); //all drones within the radar
+  const [insideNDZ, setInsideNDZ] = useState([]); //drones currently within the NDZ
+  const [time, setTime] = useState(); //current time of the birdnest touchpoint server
+  const [TenMinuteData, setTenMinuteData] = useState([]); //
 
 
   useEffect(() => {
@@ -31,7 +31,9 @@ function App() {
 
   useEffect(() => {
       setTenMinuteData(FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time))
-  }, [droneData]);
+  }, [droneData])
+
+ 
 
   return (
     <div>

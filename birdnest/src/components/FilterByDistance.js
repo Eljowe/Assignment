@@ -11,27 +11,35 @@ const FilterInsideNDZ = (droneData) => {
     return filteredDrones //return array with drones inside NDZ
 };
 
-const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
-    if (droneData.length > 0) {
-        const result = Object.keys(droneData)
-        .map(drone => {
-            const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber)
-            if (index === -1) { //add 
-                TenMinuteData.push(droneData[drone]);
-            } else {
-                if (droneData[drone].closestToNest < TenMinuteData[index].closestToNest) { //
-                    TenMinuteData[index].closestToNest=droneData[drone].closestToNest
-                }
-            }
-        })
-    }
-    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].firstSeen < 6000)
+const TenMinuteFilter = (TenMinuteData, time) => {
+    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].lastSeen < 60000)
     .reduce((cur, drone) => { return Object.assign(cur, { [drone]: TenMinuteData[drone] })}, []);
     return result;
+}
+
+const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
+    if (droneData.length > 0) {
+        Object.keys(droneData)
+        .map(drone => {
+            TenMinuteData.filter(Boolean)
+            if (!TenMinuteData.includes(undefined)) {
+                const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber)
+                if (index === -1) { //Drone isn't in the ten minute buffer list and is therefore added
+                    TenMinuteData.push(droneData[drone]);
+                } else {
+                    TenMinuteData[index].lastSeen = time; //if the drone is in NDZ, the 10 minute timer is reseted
+                    if (droneData[drone].closestToNest < TenMinuteData[index].closestToNest) { //
+                        TenMinuteData[index].closestToNest=droneData[drone].closestToNest
+                    }
+                }
+    }})
+    }
+    return TenMinuteFilter(TenMinuteData, time);
 };
 
 export default {
     FilterInsideNDZ: FilterInsideNDZ,
     distanceToNest: distanceToNest,
-    DronesInNDZ10Minutes: DronesInNDZ10Minutes
+    DronesInNDZ10Minutes: DronesInNDZ10Minutes,
+    TenMinuteFilter: TenMinuteFilter
 };

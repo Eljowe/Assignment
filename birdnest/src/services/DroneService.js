@@ -5,10 +5,7 @@ import FilterByDistance from "../components/FilterByDistance";
 //https://damp-oasis-94494.herokuapp.com/assignments.reaktor.com/birdnest/drones
 const DroneData = () => {
   const res = axios //the XML data is fetched from custom proxy, as the original server had CORS-policy trouble
-    .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones',
-    {
-      "Content-Type": "application/xml; charset=utf-8"
-    });
+    .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones')
     return res.then(response => response.data);
 };
 
@@ -19,7 +16,7 @@ const DroneDataObject = (droneData, time) => {
       {
         serialNumber: droneData[drone].children['0'].value,
         closestToNest: FilterByDistance.distanceToNest(droneData, drone),
-        firstSeen: time,
+        lastSeen: time,
         x: droneData[drone].children['8'].value,
         y: droneData[drone].children['7'].value,
       }
@@ -28,7 +25,15 @@ const DroneDataObject = (droneData, time) => {
   return obj;
 };
 
+const PilotInformation = async (serialNumber) => {
+  console.log(serialNumber)
+  const res = await axios
+    .get(`https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
+    return res.data;
+}
+
 export default {
   DroneData: DroneData,
-  DroneDataObject: DroneDataObject
+  DroneDataObject: DroneDataObject,
+  PilotInformation, PilotInformation
 };
