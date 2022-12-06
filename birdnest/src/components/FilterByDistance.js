@@ -1,7 +1,6 @@
 import React from "react";
 
 const distanceToNest = (droneData, drone) => {
-    console.log(Math.sqrt(Math.pow(250000-droneData[drone].children['8'].value, 2)+Math.pow(250000-droneData[drone].children['7'].value, 2)))
     return Math.sqrt(Math.pow(250000-droneData[drone].children['8'].value, 2)+Math.pow(250000-droneData[drone].children['7'].value, 2)) //simple formula of distance between two points
 };
 
@@ -12,4 +11,7 @@ const FilterInsideNDZ = (droneData) => {
     return result;
 };
 
-export default FilterInsideNDZ;
+export default {
+    FilterInsideNDZ: FilterInsideNDZ,
+    distanceToNest: distanceToNest
+};

@@ -1,8 +1,9 @@
 import React from "react";
+import FilterByDistance from "./FilterByDistance";
 
 const DroneListItem = ({droneData, drone}) => {
     return(
-        <li>{droneData[drone].children[0].value} y: {droneData[drone].children['7'].value} x: {droneData[drone].children['8'].value}</li>
+        <li>{droneData[drone].children[0].value} distance to nest: {Math.round((FilterByDistance.distanceToNest(droneData, drone))/1000)}</li>
     )
     };
 
