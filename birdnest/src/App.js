@@ -15,7 +15,7 @@ function App() {
     const droneUpdate = async (response) => {
         var xml = await new XMLParser().parseFromString(response) //Response XML-data to array
         setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
-        var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, time)
+        var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp))
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
         setInsideNDZ(FilterByDistance.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
     }

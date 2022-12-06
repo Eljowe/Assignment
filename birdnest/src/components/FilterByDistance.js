@@ -15,7 +15,7 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
     if (droneData.length > 0) {
         const result = Object.keys(droneData)
         .map(drone => {
-            const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber);
+            const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber)
             if (index === -1) { //add 
                 TenMinuteData.push(droneData[drone]);
             } else {
@@ -25,9 +25,9 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
             }
         })
     }
-    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].firstSeen > 60000)
-    //console.log(result)
-    return TenMinuteData;
+    const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].firstSeen < 6000)
+    .reduce((cur, drone) => { return Object.assign(cur, { [drone]: TenMinuteData[drone] })}, []);
+    return result;
 };
 
 export default {
