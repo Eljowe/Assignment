@@ -38,12 +38,12 @@ function App() {
   return (
     <div>
       <p>Time: {time}</p>
-      <p>Drones:</p>
+      <p>Inside NDZ (last 10 minutes):</p>
+      <ListComponent droneData={TenMinuteData} />
+      <p>All drones:</p>
       <ListComponent droneData={droneData}/>
       <p>Inside NDZ:</p>
       <ListComponent droneData={insideNDZ} />
-      <p>Inside NDZ (last 10 minutes):</p>
-      <ListComponent droneData={TenMinuteData} />
     </div>
   );
 }
