@@ -23,6 +23,7 @@ const DroneDataObject = (droneData, time) => {
         serialNumber: droneData[drone].children['0'].value,
         closestToNest: FilterByDistance.distanceToNest(droneData, drone),
         lastSeen: time,
+        timeOnList: null,
         x: droneData[drone].children['8'].value,
         y: droneData[drone].children['7'].value,
         pilotInformation: null

@@ -12,6 +12,7 @@ const DroneListItem = ({droneData, drone}) => {
                 <th>{droneData[drone].pilotInformation.lastName}</th>
                 <th>{droneData[drone].pilotInformation.phoneNumber}</th>
                 <th>{droneData[drone].pilotInformation.email}</th>
+                <th>{Math.floor((droneData[drone].timeOnList)/60000)}minutes</th>
             </tr>
         )
     }

@@ -13,6 +13,9 @@ const FilterInsideNDZ = (droneData) => {
 };
 
 const TenMinuteFilter = (TenMinuteData, time) => {
+    Object.keys(TenMinuteData).map(obj => {
+        TenMinuteData[obj].timeOnList = time - TenMinuteData[obj].lastSeen;
+    })
     const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].lastSeen < 600000)
     .reduce((cur, drone) => { return Object.assign(cur, { [drone]: TenMinuteData[drone] })}, []);
     return result;
