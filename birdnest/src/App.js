@@ -14,9 +14,9 @@ function App() {
     const updateDroneData = setInterval(()=> {
       DroneService.DroneData().then(response => {
         var xml = new XMLParser().parseFromString(response) //Response XML-data to array
+        setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
         var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, time)
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
-        setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
         setInsideNDZ(FilterByDistance.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
       }).then(setTenMinuteData(FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time)))
     }, 2000); //Loop every 2 seconds to fetch current drone positions
@@ -24,6 +24,9 @@ function App() {
     clearInterval(updateDroneData);
     };
   }, []);
+
+  
+
   return (
     <div>
       <p>Time: {time}</p>
