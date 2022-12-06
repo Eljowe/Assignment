@@ -4,30 +4,22 @@ import DroneService from "../services/DroneService";
 const DroneListItem = ({droneData, drone}) => {
     if (droneData[drone].pilotInformation !== null) {
         return(
-            <li>
-                <div>
-                    {droneData[drone].serialNumber} distance to nest: {Math.round((droneData[drone].closestToNest)/1000)}
-                    <br/>
-                    Pilot ID: {droneData[drone].pilotInformation.pilotId}
-                    <br/>
-                    Name: {droneData[drone].pilotInformation.firstName}
-                    <br/>
-                    Surname: {droneData[drone].pilotInformation.lastName}
-                    <br/>
-                    Phone number: {droneData[drone].pilotInformation.phoneNumber}
-                    <br/>
-                    Email: {droneData[drone].pilotInformation.email}
-                    <br/>
-                </div>
-            </li>
+            <tr>
+                <th>{droneData[drone].serialNumber}</th>
+                <th>{Math.round((droneData[drone].closestToNest)/1000)}</th>
+                <th>{droneData[drone].pilotInformation.pilotId}</th>
+                <th>{droneData[drone].pilotInformation.firstName}</th>
+                <th>{droneData[drone].pilotInformation.lastName}</th>
+                <th>{droneData[drone].pilotInformation.phoneNumber}</th>
+                <th>{droneData[drone].pilotInformation.email}</th>
+            </tr>
         )
     }
     return(
-        <li>
-            <div>
-                {droneData[drone].serialNumber} distance to nest: {Math.round((droneData[drone].closestToNest)/1000)}
-            </div>
-        </li>
+        <tr>
+            <th>{droneData[drone].serialNumber}</th>
+            <th>{Math.round((droneData[drone].closestToNest)/1000)}</th>
+        </tr>
     )
     };
 
