@@ -13,8 +13,8 @@ function App() {
     const updateDroneData = setInterval(()=> {
       DroneService.DroneData().then(response => {
         var xml = new XMLParser().parseFromString(response) //Response XML-data to array
-        setDroneData(xml.children['1'].children); //set list of drones to variable
-        setInsideNDZ(FilterInsideNDZ(droneData))
+        setDroneData(xml.children['1'].children) //set list of drones to variable
+        setInsideNDZ(FilterInsideNDZ(xml.children['1'].children))
       })
     }, 2000); //Loop every 2 seconds to fetch current drone positions
     return () => {
@@ -24,9 +24,9 @@ function App() {
 
   return (
     <div>
-      <p>All drones:</p>
+      <p>Drones:</p>
       <ListComponent droneData={droneData}/>
-      <p>Drones inside NDZ</p>
+      <p>Inside NDZ:</p>
       <ListComponent droneData={insideNDZ} />
     </div>
   );
