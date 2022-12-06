@@ -3,7 +3,7 @@ import FilterByDistance from "./FilterByDistance";
 
 const DroneListItem = ({droneData, drone}) => {
     return(
-        <li>{droneData[drone].children[0].value} distance to nest: {Math.round((FilterByDistance.distanceToNest(droneData, drone))/1000)}</li>
+        <li>{droneData[drone].serialNumber} distance to nest: {Math.round((droneData[drone].closestToNest)/1000)}</li>
     )
     };
 

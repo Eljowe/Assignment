@@ -6,9 +6,9 @@ const distanceToNest = (droneData, drone) => {
 
 const FilterInsideNDZ = (droneData) => {
     const result = Object.keys(droneData)
-    .filter(drone => distanceToNest(droneData, drone) < 100000)
-    .reduce((cur, drone) => { return Object.assign(cur, { [drone]: droneData[drone] })}, {});
-    return result;
+    .filter(drone => droneData[drone].closestToNest < 100000)
+    .reduce((cur, drone) => { return Object.assign(cur, { [drone]: droneData[drone] })}, []);
+    return result //return array with drones inside NDZ
 };
 
 export default {
