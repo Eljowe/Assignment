@@ -1,8 +1,9 @@
 import React from "react";
-import DroneService from "../services/DroneService";
 
 const DroneListItem = ({droneData, drone}) => {
     if (droneData[drone].pilotInformation !== null) {
+        const minutes = Math.floor(droneData[drone].timeOnList / 60000);
+        const seconds = (((droneData[drone].timeOnList) % 60000) / 1000).toFixed(0);
         return(
             <tr>
                 <th>{droneData[drone].serialNumber}</th>
@@ -12,7 +13,7 @@ const DroneListItem = ({droneData, drone}) => {
                 <th>{droneData[drone].pilotInformation.lastName}</th>
                 <th>{droneData[drone].pilotInformation.phoneNumber}</th>
                 <th>{droneData[drone].pilotInformation.email}</th>
-                <th>{Math.floor((droneData[drone].timeOnList)/60000)}minutes</th>
+                <th>{minutes}:{seconds}</th>
             </tr>
         )
     }

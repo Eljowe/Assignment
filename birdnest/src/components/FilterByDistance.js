@@ -1,4 +1,3 @@
-import React from "react";
 import DroneService from "../services/DroneService";
 
 const distanceToNest = (droneData, drone) => {

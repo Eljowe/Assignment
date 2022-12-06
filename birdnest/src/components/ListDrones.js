@@ -1,7 +1,5 @@
 import React from "react";
 import DroneListItem from "./DroneListItem";
-import FilterByDistance from "./FilterByDistance";
-import DroneService from "../services/DroneService";
 
 const ListComponent = ({droneData}) => {
     return(
@@ -15,7 +13,7 @@ const ListComponent = ({droneData}) => {
                     <th>Surname</th>
                     <th>Phone number</th>
                     <th>Email</th>
-                    <th>Time on list</th>
+                    <th>Since last seen</th>
                 </tr>
             {Object.keys(droneData).map(drone => 
             <DroneListItem key={droneData[drone].serialNumber} droneData={droneData} drone={drone}/>
