@@ -1,9 +1,9 @@
 import axios from 'axios'
-import FilterByDistance from "../components/FilterByDistance";
+import FilterController from "../components/FilterController";
 
 //https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones'
 //https://damp-oasis-94494.herokuapp.com/assignments.reaktor.com/birdnest/drones
-const DroneData = () => {
+const XMLDroneData = () => {
   const res = axios //the XML data is fetched from custom proxy, as the original server had CORS-policy trouble
     .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones')
     return res.then(response => response.data);
@@ -21,7 +21,7 @@ const DroneDataObject = (droneData, time) => {
     obj.push(
       {
         serialNumber: droneData[drone].children['0'].value,
-        closestToNest: FilterByDistance.distanceToNest(droneData, drone),
+        closestToNest: FilterController.distanceToNest(droneData, drone),
         lastSeen: time,
         timeOnList: null,
         x: droneData[drone].children['8'].value,
@@ -34,7 +34,7 @@ const DroneDataObject = (droneData, time) => {
 };
 
 export default {
-  DroneData: DroneData,
+  XMLDroneData: XMLDroneData,
   DroneDataObject: DroneDataObject,
   PilotInformation: PilotInformation
 };

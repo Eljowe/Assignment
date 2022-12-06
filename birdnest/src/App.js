@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DroneService from "./services/DroneService";
 import XMLParser from 'react-xml-parser';
 import ListComponent from "./components/ListDrones";
-import FilterByDistance from "./components/FilterByDistance";
+import FilterController from "./components/FilterController";
 
 function App() {
   const [droneData, setDroneData] = useState([]); //all drones within the radar
@@ -17,10 +17,10 @@ function App() {
         setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
         var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp))
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
-        setInsideNDZ(FilterByDistance.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
+        setInsideNDZ(FilterController.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
     }
     const updateDroneData = setInterval(()=> {
-      DroneService.DroneData().then(response => {
+      DroneService.XMLDroneData().then(response => {
         droneUpdate(response);
       })
     }, 2000); //Loop every 2 seconds to fetch current drone positions
@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-      setTenMinuteData(FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time))
+      setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time))
   }, [droneData])
 
  
