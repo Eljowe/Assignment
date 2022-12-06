@@ -1,13 +1,13 @@
 import React from "react";
 
 const DroneListItem = ({droneData, drone}) => {
-    if (droneData[drone].pilotInformation !== null) {
-        const minutes = Math.floor(droneData[drone].timeOnList / 60000);
+    if (droneData[drone].pilotInformation !== null) { //Pilot information is set if drone enters NDZ
+        const minutes = Math.floor(droneData[drone].timeOnList / 60000); //time formatting
         const seconds = (((droneData[drone].timeOnList) % 60000) / 1000).toFixed(0);
         return(
             <tr>
                 <th>{droneData[drone].serialNumber}</th>
-                <th>{Math.round((droneData[drone].closestToNest)/1000)}</th>
+                <th>{Math.round((droneData[drone].closestToNest)/1000)} meters</th>
                 <th>{droneData[drone].pilotInformation.pilotId}</th>
                 <th>{droneData[drone].pilotInformation.firstName}</th>
                 <th>{droneData[drone].pilotInformation.lastName}</th>

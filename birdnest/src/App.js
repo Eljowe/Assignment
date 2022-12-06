@@ -8,18 +8,18 @@ function App() {
   const [droneData, setDroneData] = useState([]); //all drones within the radar
   const [insideNDZ, setInsideNDZ] = useState([]); //drones currently within the NDZ
   const [time, setTime] = useState(); //current time of the birdnest touchpoint server
-  const [TenMinuteData, setTenMinuteData] = useState([]); //
+  const [TenMinuteData, setTenMinuteData] = useState([]); //Drones that entered NDZ in the last 10 minutes
 
 
   useEffect(() => {
     const droneUpdate = async (response) => {
         var xml = await new XMLParser().parseFromString(response) //Response XML-data to array
         setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
-        var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp))
+        var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp)) //create more coherent object for drone to handle later
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
-        setInsideNDZ(FilterController.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
+        setInsideNDZ(FilterController.FilterInsideNDZ(DroneDataObject))
     }
-    const updateDroneData = setInterval(()=> {
+    const updateDroneData = setInterval(()=> { //interval to track drones and changes
       DroneService.XMLDroneData().then(response => {
         droneUpdate(response);
       })
@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-      setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time))
+      setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData, insideNDZ, time))
   }, [droneData])
 
  
