@@ -18,14 +18,21 @@ function App() {
         var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, time)
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
         setInsideNDZ(FilterByDistance.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
-      }).then(setTenMinuteData(FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time)))
+      })
     }, 2000); //Loop every 2 seconds to fetch current drone positions
     return () => {
     clearInterval(updateDroneData);
     };
   }, []);
 
-  
+  useEffect(() => {
+    const interval = setInterval(()=> {
+      setTenMinuteData(FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time))
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    }
+  }, []);
 
   return (
     <div>

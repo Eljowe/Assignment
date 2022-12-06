@@ -20,7 +20,7 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
             if (index === -1) {
                 TenMinuteData.push(droneData[drone]);
             } else {
-                console.log(TenMinuteData[index])
+                console.log('here')
             }
         })
     }
