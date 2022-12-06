@@ -18,13 +18,12 @@ function App() {
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
         setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
         setInsideNDZ(FilterByDistance.FilterInsideNDZ(DroneDataObject)) //List of drones inside 100m range
-      })
+      }).then(setTenMinuteData(FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time)))
     }, 2000); //Loop every 2 seconds to fetch current drone positions
     return () => {
     clearInterval(updateDroneData);
     };
   }, []);
-  FilterByDistance.DronesInNDZ10Minutes(TenMinuteData,insideNDZ, time)
   return (
     <div>
       <p>Time: {time}</p>
@@ -33,6 +32,7 @@ function App() {
       <p>Inside NDZ:</p>
       <ListComponent droneData={insideNDZ} />
       <p>Inside NDZ (last 10 minutes):</p>
+      <ListComponent droneData={TenMinuteData} />
     </div>
   );
 }
