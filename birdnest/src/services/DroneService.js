@@ -2,7 +2,7 @@ import axios from 'axios'
 import FilterController from "../components/FilterController";
 
 const XMLDroneData = () => { //GET request to fetch drone data
-  const res = axios //the XML data is fetched from custom proxy, as the original server had CORS-policy trouble
+  const res = axios //the XML data is fetched from custom proxy, due to CORS-policy
     .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones')
     .catch(function (error) { 
       console.log(error);

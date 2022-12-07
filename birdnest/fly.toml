@@ -1,4 +1,4 @@
-# fly.toml file generated for birdnest85 on 2022-12-07T16:45:56+02:00
+# fly.toml file generated for birdnest85 on 2022-12-07T19:48:14+02:00
 
 app = "birdnest85"
 kill_signal = "SIGINT"
@@ -6,7 +6,6 @@ kill_timeout = 5
 processes = []
 
 [env]
-  PORT = "3000"
 
 [experimental]
   allowed_public_ports = []
@@ -14,7 +13,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 3000
+  internal_port = 80
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
