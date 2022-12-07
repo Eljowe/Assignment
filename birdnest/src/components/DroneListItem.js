@@ -3,7 +3,8 @@ import React from "react";
 const DroneListItem = ({droneData, drone}) => {
     if (droneData[drone].pilotInformation !== null) { //Pilot information is set if drone enters NDZ
         const minutes = Math.floor(droneData[drone].timeOnList / 60000); //time formatting
-        const seconds = (((droneData[drone].timeOnList) % 60000) / 1000).toFixed(0);
+        var seconds = (((droneData[drone].timeOnList) % 60000) / 1000).toFixed(0);
+        seconds = ("0" + seconds).slice(-2);
         return(
             <tr>
                 <th>{droneData[drone].serialNumber}</th>
