@@ -1,6 +1,6 @@
-# fly.toml file generated for birdnest85 on 2022-12-07T19:48:14+02:00
+# fly.toml file generated for bird85 on 2022-12-07T20:25:06+02:00
 
-app = "birdnest85"
+app = "bird85"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -23,7 +23,6 @@ processes = []
     type = "connections"
 
   [[services.ports]]
-    force_https = true
     handlers = ["http"]
     port = 80
 
@@ -36,3 +35,7 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+
+[[statics]]
+  guest_path = "/usr/share/nginx/html/"
+  url_prefix = "/"

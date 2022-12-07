@@ -1,32 +1,11 @@
-FROM debian:bullseye as builder
+FROM node:15.4 as build 
 
-ARG NODE_VERSION=16.16.0
-
-RUN apt-get update; apt install -y curl
-RUN curl https://get.volta.sh | bash
-ENV VOLTA_HOME /root/.volta
-ENV PATH /root/.volta/bin:$PATH
-RUN volta install node@${NODE_VERSION}
-
-#######################################################################
-
-RUN mkdir /app
-WORKDIR /app
-
-ENV NODE_ENV production
-
+WORKDIR /react-app
+COPY package*.json .
+RUN npm install
 COPY . .
+RUN npm run build
 
-RUN npm install && npm run build
-FROM debian:bullseye
-
-LABEL fly_launch_runtime="nodejs"
-
-COPY --from=builder /root/.volta /root/.volta
-COPY --from=builder /app /app
-
-WORKDIR /app
-ENV NODE_ENV production
-ENV PATH /root/.volta/bin:$PATH
-
-CMD [ "npm", "run", "start" ]
+FROM nginx:1.19
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /react-app/build /usr/share/nginx/html
