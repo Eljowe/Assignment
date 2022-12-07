@@ -1,7 +1,7 @@
 import React from "react";
 import DroneListItem from "./DroneListItem";
 
-const ListComponent = ({droneData}) => {
+const ListComponent = ({droneData}) => { //Table listing component
     return(
         <table border="1">
             <tbody>
@@ -15,9 +15,9 @@ const ListComponent = ({droneData}) => {
                     <th>Email</th>
                     <th>Time since last seen</th>
                 </tr>
-            {Object.keys(droneData).map(drone => 
-            <DroneListItem key={droneData[drone].serialNumber} droneData={droneData} drone={drone}/>
-        )}
+                    {Object.keys(droneData).map(drone => 
+                    <DroneListItem key={droneData[drone].serialNumber} droneData={droneData} drone={drone}/>
+                    )}
             </tbody>
         </table>
     )

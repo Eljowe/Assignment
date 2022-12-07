@@ -1,9 +1,7 @@
 import axios from 'axios'
 import FilterController from "../components/FilterController";
 
-//https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones'
-//https://damp-oasis-94494.herokuapp.com/assignments.reaktor.com/birdnest/drones
-const XMLDroneData = () => {
+const XMLDroneData = () => { //GET request to fetch drone data
   const res = axios //the XML data is fetched from custom proxy, as the original server had CORS-policy trouble
     .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones')
     .catch(function (error) { 
@@ -13,7 +11,7 @@ const XMLDroneData = () => {
     return res.then(response => response.data);
 };
 
-const PilotInformation = async (serialNumber) => {
+const PilotInformation = async (serialNumber) => { //GET request to fetch pilot information
   const res = await axios
     .get(`https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
     .catch(function (error) { 
@@ -23,7 +21,7 @@ const PilotInformation = async (serialNumber) => {
     return await res.data;
 };
 
-const DroneDataObject = (droneData, time) => {
+const DroneDataObject = (droneData, time) => { //Creates more coherent drone object for easier data handling (perhaps some other XML to Json library would've done this automatically)
   const obj = []
   Object.keys(droneData).map(drone => 
     obj.push(

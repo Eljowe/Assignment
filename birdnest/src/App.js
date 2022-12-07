@@ -7,6 +7,9 @@ import Radar from "./components/DroneGrid";
 import RadarService from "./services/RadarService";
 import './index.css';
 
+
+//App created by Joel Wickström for Reaktor assignment
+
 function App() {
   const [droneData, setDroneData] = useState([]); //all drones within the radar
   const [insideNDZ, setInsideNDZ] = useState([]); //drones currently within the NDZ

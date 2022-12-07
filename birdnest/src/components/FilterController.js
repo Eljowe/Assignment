@@ -11,9 +11,9 @@ const FilterInsideNDZ = (droneData) => { //filters drones that are within 100m f
     return filteredDrones
 };
 
-const TenMinuteFilter = (TenMinuteData, time) => {
+const TenMinuteFilter = (TenMinuteData, time) => { //filters drones that have last been seen over ten minutes ago
     Object.keys(TenMinuteData).map(obj => {
-        TenMinuteData[obj].timeOnList = time - TenMinuteData[obj].lastSeen;
+        TenMinuteData[obj].timeOnList = time - TenMinuteData[obj].lastSeen; //timer starts counting from zero when the drone leaves the NDZ (timer resets to 0 when the drone is in NDZ)
     })
     const result = Object.keys(TenMinuteData).filter(obj => time-TenMinuteData[obj].lastSeen < 600000)
     .reduce((cur, drone) => { return Object.assign(cur, { [drone]: TenMinuteData[drone] })}, []);
@@ -28,14 +28,14 @@ const DronesInNDZ10Minutes = (TenMinuteData, droneData, time) => {
             if (!TenMinuteData.includes(undefined)) {
                 const index = TenMinuteData.findIndex(object => object.serialNumber === droneData[drone].serialNumber)
                 if (index === -1) { //Drone isn't in the ten minute buffer list and is therefore added
-                    DroneService.PilotInformation(droneData[drone].serialNumber)
+                    DroneService.PilotInformation(droneData[drone].serialNumber) //Pilot information is fetched as the drone has violated NDZ
                     .then(response => {
                         droneData[drone].pilotInformation = response;
                     })
                     TenMinuteData.push(droneData[drone]);
                 } else {
                     TenMinuteData[index].lastSeen = time; //if the drone is in NDZ, the 10 minute timer is reseted
-                    if (droneData[drone].closestToNest < TenMinuteData[index].closestToNest) { //
+                    if (droneData[drone].closestToNest < TenMinuteData[index].closestToNest) { //Closest recorded distance to the nest is left is saved
                         TenMinuteData[index].closestToNest=droneData[drone].closestToNest
                     }
                 }

@@ -9,21 +9,21 @@ function drawPoint(x, y, context) {
   }
 
 const updateRadar = ({droneData}) => {
-    droneData = droneData.filter(Boolean)
+    droneData = droneData.filter(Boolean) //remove possible undefined objects
     var c = document.getElementById("radarcanvas");
     var context = c.getContext("2d");
     context.font = "14px Courier New";
     Object.keys(droneData).map(drone => {
-        drawPoint(droneData[drone].x/1000, 500 -droneData[drone].y/1000, context)
-        context.fillText([droneData[drone].serialNumber], droneData[drone].x/1000 - 55, 500 - droneData[drone].y/1000 + 20);
+        drawPoint(droneData[drone].x/1000, 500 -droneData[drone].y/1000, context) //draw a point presenting a drone in the grid
+        context.fillText([droneData[drone].serialNumber], droneData[drone].x/1000 - 55, 500 - droneData[drone].y/1000 + 20); //nametag for the drone
     })
     context.font = "20px Courier New";
-    context.fillText('No-Fly Zone', 190, 255);
+    context.fillText('No-Fly Zone', 190, 255); //tag in the center of the circle
     context.save();
     context.strokeStyle = '#ff0000'
     context.lineWidth = 3;
     context.beginPath();
-    context.arc(250, 250, 100, 0, 2 * Math.PI, false);
+    context.arc(250, 250, 100, 0, 2 * Math.PI, false); //NDZ marked with red circle
     context.stroke();
     context.restore();
 };
