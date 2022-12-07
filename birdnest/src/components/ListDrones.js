@@ -7,7 +7,7 @@ const ListComponent = ({droneData}) => {
             <tbody>
                 <tr>
                     <th>Serial number</th>
-                    <th>Closest distance to nest</th>
+                    <th>Distance to nest</th>
                     <th>Pilot ID</th>
                     <th>Name</th>
                     <th>Surname</th>

@@ -6,12 +6,20 @@ import FilterController from "../components/FilterController";
 const XMLDroneData = () => {
   const res = axios //the XML data is fetched from custom proxy, as the original server had CORS-policy trouble
     .get('https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/drones')
+    .catch(function (error) { 
+      console.log(error);
+      return {};
+    });
     return res.then(response => response.data);
 };
 
 const PilotInformation = async (serialNumber) => {
   const res = await axios
     .get(`https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
+    .catch(function (error) { 
+      console.log(error);
+      return {};
+    });
     return await res.data;
 };
 

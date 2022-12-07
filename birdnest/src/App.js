@@ -3,6 +3,9 @@ import DroneService from "./services/DroneService";
 import XMLParser from 'react-xml-parser';
 import ListComponent from "./components/ListDrones";
 import FilterController from "./components/FilterController";
+import Radar from "./components/DroneGrid";
+import RadarService from "./services/RadarService";
+import './index.css';
 
 function App() {
   const [droneData, setDroneData] = useState([]); //all drones within the radar
@@ -31,7 +34,9 @@ function App() {
 
   useEffect(() => {
       setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData, insideNDZ, time))
-  }, [droneData])
+      RadarService.setupRadar();
+      RadarService.updateRadar({droneData});
+    }, [droneData])
 
  
 
@@ -44,6 +49,7 @@ function App() {
       <ListComponent droneData={droneData}/>
       <p>Inside NDZ:</p>
       <ListComponent droneData={insideNDZ} />
+      <Radar className='radarcanvas' droneData={droneData} />
     </div>
   );
 }
