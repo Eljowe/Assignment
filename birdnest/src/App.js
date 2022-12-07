@@ -16,11 +16,11 @@ function App() {
 
   useEffect(() => {
     const droneUpdate = async (response) => {
-        var xml = await new XMLParser().parseFromString(response) //Response XML-data to array
-        setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp))
-        var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp)) //create more coherent object for drone to handle later
+        var xml = await new XMLParser().parseFromString(response) //parse response XML-data to array
+        setTime(Date.parse(xml.children['1'].attributes.snapshotTimestamp)) //sync server time
+        var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp)) //create more coherent drone object to handle data more intuitively
         setDroneData(DroneDataObject) //set list of drones to variable (this is used for coordinate mapping graph)
-        setInsideNDZ(FilterController.FilterInsideNDZ(DroneDataObject))
+        setInsideNDZ(FilterController.FilterInsideNDZ(DroneDataObject)) //update drones inside the NDZ
     }
     const updateDroneData = setInterval(()=> { //interval to track drones and changes
       DroneService.XMLDroneData().then(response => {
@@ -32,7 +32,7 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { //update radar and ten minute data when drone list is updated
       setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData, insideNDZ, time))
       RadarService.setupRadar();
       RadarService.updateRadar({droneData});
