@@ -14,8 +14,8 @@ code {
 
 #radarcanvas {
   border: '1px' solid black;
-  color: rgb(39, 39, 39);
-  background-color: rgb(138, 138, 138);
+  color: #5c5c5c;
+  background-color: #8a8a8a;
   border: solid;
   border-radius: 1px;
 }

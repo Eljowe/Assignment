@@ -45,11 +45,12 @@ function App() {
       <p>Time: {time}</p>
       <p>Inside NDZ (last 10 minutes):</p>
       <ListComponent droneData={TenMinuteData} />
+      <p>Radar</p>
+      <Radar className='radarcanvas' droneData={droneData} />
       <p>All drones:</p>
       <ListComponent droneData={droneData}/>
       <p>Inside NDZ:</p>
       <ListComponent droneData={insideNDZ} />
-      <Radar className='radarcanvas' droneData={droneData} />
     </div>
   );
 }
