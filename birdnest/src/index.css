@@ -1,10 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(229,229,255,1) 51%, rgba(239,239,255,1) 78%, rgba(255,255,255,1) 100%);
 }
 
 code {
@@ -13,10 +10,36 @@ code {
 }
 
 #radarcanvas {
-  border: '1px' solid black;
-  color: #5c5c5c;
-  background-color: #8a8a8a;
+  border: '1px' solid;
+  color: #c2c2c2;
+  background-color: #dfdfdf;
   border: solid;
   border-radius: 1px;
 }
 
+table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+}
+
+table tr {
+  background-color: #c2c2c2;
+  color: #000000;
+  text-align: left;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+}
+
+table tbody tr {
+  border-bottom: thin solid #000000;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #dfdfdf;
+}

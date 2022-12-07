@@ -42,14 +42,13 @@ function App() {
 
   return (
     <div>
-      <p>Time: {time}</p>
-      <p>Inside NDZ (last 10 minutes):</p>
+      <h1>Drones that have violated the No-fly zone (last 10 minutes):</h1>
       <ListComponent droneData={TenMinuteData} />
-      <p>Radar</p>
+      <h1>Radar</h1>
       <Radar className='radarcanvas' droneData={droneData} />
-      <p>All drones:</p>
+      <h2>All drones within the radar area:</h2>
       <ListComponent droneData={droneData}/>
-      <p>Inside NDZ:</p>
+      <h2>Drones currently inside NDZ:</h2>
       <ListComponent droneData={insideNDZ} />
     </div>
   );
