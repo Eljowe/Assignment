@@ -4,11 +4,11 @@ const distanceToNest = (droneData, drone) => { //simple formula to calculate dis
     return Math.sqrt(Math.pow(250000-droneData[drone].children['8'].value, 2)+Math.pow(250000-droneData[drone].children['7'].value, 2)) //simple formula of distance between two points
 };
 
-const FilterInsideNDZ = (droneData) => {
+const FilterInsideNDZ = (droneData) => { //filters drones that are within 100m from nest
     const filteredDrones = Object.keys(droneData)
     .filter(drone => droneData[drone].closestToNest < 100000)
     .reduce((cur, drone) => { return Object.assign(cur, { [drone]: droneData[drone] })}, []);
-    return filteredDrones //return array with drones inside NDZ
+    return filteredDrones
 };
 
 const TenMinuteFilter = (TenMinuteData, time) => {

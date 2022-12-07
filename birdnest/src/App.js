@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div>
-      <h1>Drones that have violated the No-fly zone (last 10 minutes):</h1>
+      <h1>Drones that have violated the No-fly zone (in the last 10 minutes):</h1>
       <ListComponent droneData={TenMinuteData} />
       <h1>Radar</h1>
       <Radar className='radarcanvas' droneData={droneData} />

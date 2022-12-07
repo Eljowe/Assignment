@@ -12,13 +12,13 @@ const updateRadar = ({droneData}) => {
     droneData = droneData.filter(Boolean)
     var c = document.getElementById("radarcanvas");
     var context = c.getContext("2d");
-    context.font = "14px Courier New Bold";
+    context.font = "14px Courier New";
     Object.keys(droneData).map(drone => {
         drawPoint(droneData[drone].x/1000, 500 -droneData[drone].y/1000, context)
-        context.fillText([droneData[drone].serialNumber], droneData[drone].x/1000 - 50, 500 - droneData[drone].y/1000 + 20);
+        context.fillText([droneData[drone].serialNumber], droneData[drone].x/1000 - 55, 500 - droneData[drone].y/1000 + 20);
     })
-    context.font = "20px Courier New Bold";
-    context.fillText('No-Fly Zone', 200, 255);
+    context.font = "20px Courier New";
+    context.fillText('No-Fly Zone', 190, 255);
     context.save();
     context.strokeStyle = '#ff0000'
     context.lineWidth = 3;
@@ -28,7 +28,7 @@ const updateRadar = ({droneData}) => {
     context.restore();
 };
 
-const setupRadar = () => {
+const setupRadar = () => { //draw grid
     var c = document.getElementById("radarcanvas");
     var context = c.getContext("2d");
     context.clearRect(0, 0, c.width, c.height);
@@ -41,7 +41,7 @@ const setupRadar = () => {
         context.moveTo(p, 0.5 + x + p);
         context.lineTo(c.width + p, 0.5 + x + p);
     }
-    context.strokeStyle = "#5c5c5c";
+    context.strokeStyle = "#ffd9d9";
     context.stroke()
 }
 

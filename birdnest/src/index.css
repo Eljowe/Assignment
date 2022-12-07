@@ -1,18 +1,25 @@
-body {
-  margin: 0;
-  background: rgb(255,255,255);
-background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(229,229,255,1) 51%, rgba(239,239,255,1) 78%, rgba(255,255,255,1) 100%);
+html, body {
+  height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  display: table;
+  margin: auto;
 }
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
 
 #radarcanvas {
   border: '1px' solid;
-  color: #c2c2c2;
-  background-color: #dfdfdf;
+  color: #ff8989;
+  background-color: #fff1f1;
   border: solid;
   border-radius: 1px;
 }
@@ -22,11 +29,11 @@ table {
   margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
-  min-width: 400px;
+  min-width: 1200px;
 }
 
 table tr {
-  background-color: #c2c2c2;
+  background-color: #ffdddd;
   color: #000000;
   text-align: left;
 }
@@ -41,5 +48,5 @@ table tbody tr {
 }
 
 tbody tr:nth-of-type(even) {
-  background-color: #dfdfdf;
+  background-color: #fff1f1;
 }
