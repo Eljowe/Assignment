@@ -21,50 +21,38 @@ app.use(express.static('build'))
 
 morgan.token("Body", req => JSON.stringify(req.body));
 
-let drones = [
-    {
-        serialNumber: 'test',
-        closestToNest: 1,
-        lastSeen: undefined,
-        timeOnList: 120,
-        x: 250,
-        y: 251,
-        pilotInformation: null
-      }
-]
+
+let drones = []
 
 const generateId = () => {
-const maxId = persons.length > 0
+const maxId = dronesTenMinutes.length > 0
     ? Math.max(...persons.map(n => n.id))
     : 0
 return maxId + 1
 }
 
-
-
 app.get('/api/drones', (req, res) => {
     res.json(drones)
 })
 
-
 app.post('/api/drones/', (request, response) => {
     const body = request.body;
-
-    if (drones.filter(drone => drone.serialNumber===body.serialNumber).length > 0) {
-    return 0
+    console.log(body)
+    if (drones.filter(drone => drone.serialNumber===body.serialNumber).length > 0) { 
+        objIndex = drones.findIndex((obj => obj.serialNumber == body.serialNumber));
+        drones[objIndex].lastSeen = body.lastSeen
+        if (drones[objIndex].firstSeen === null){
+            drones[objIndex].firstSeen.lastSeen = body.lastSeen
+        }
+        if (drones[objIndex].pilotInformation === null) {
+            drones[objIndex].pilotInformation = body.pilotInformation
+        }
+        drones[objIndex].timeOnList = body.timeOnList
+        console.log('updated last seen value')
+        return 0
     }
-
-    const drone = {
-        serialNumber: body.serialNumber,
-        closestToNest: body.closestToNest,
-        lastSeen: body.lastSeen,
-        timeOnList: body.timeOnList,
-        x: body.x,
-        y: body.y,
-        pilotInformation: body.pilotInformation
-      }
-    drones = drones.concat(drone)
-    response.json(drone)
+    drones = drones.concat(body)
+    response.json(body)
 })
 
 const unknownEndpoint = (request, response) => {

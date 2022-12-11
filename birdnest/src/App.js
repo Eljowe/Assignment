@@ -6,6 +6,7 @@ import FilterController from "./components/FilterController";
 import Radar from "./components/DroneGrid";
 import RadarService from "./services/RadarService";
 import './index.css';
+import DroneDB from "./services/DroneDB";
 
 
 //App created by Joel Wickström for Reaktor assignment
@@ -25,7 +26,9 @@ function App() {
         
         var DroneDataObject = DroneService.DroneDataObject(xml.children['1'].children, Date.parse(xml.children['1'].attributes.snapshotTimestamp)) //create more coherent drone object to handle data more intuitively
         setDroneData(DroneDataObject) //set list of drones to variable
+        
         setInsideNDZ(FilterController.FilterInsideNDZ(DroneDataObject)) //update drones inside the NDZ
+
     }
     const updateDroneData = setInterval(()=> { //interval to track drones and changes
       DroneService.XMLDroneData().then(response => {
@@ -40,7 +43,10 @@ function App() {
 
   //update radar and ten minute data when drone list is updated
   useEffect(() => {
-      setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData, insideNDZ, time))
+      const drones = FilterController.DronesInNDZ10Minutes(TenMinuteData, insideNDZ, time)
+      Object.keys(drones).map(drone => {DroneDB.addDrone(drones[drone])})
+      DroneDB.listDrones().then(response => {setTenMinuteData(FilterController.DronesInNDZ10Minutes(response, insideNDZ, time))})
+      //setTenMinuteData(FilterController.DronesInNDZ10Minutes(TenMinuteData, insideNDZ, time))
       RadarService.setupRadar();
       RadarService.updateRadar({droneData});
     }, [droneData])
