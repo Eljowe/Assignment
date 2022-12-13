@@ -27,7 +27,7 @@ morgan.token("Body", req => JSON.stringify(req.body));
 
 
 app.get('/api/drones', (req, response) => {
-    fetch.getXML()
+    fetch.updateDatabase()
     Drone.find({}).then(drones => {
         response.json(drones)
     })
