@@ -47,6 +47,7 @@ function App() {
       <h1>Drones that have violated the No-fly zone (in the last 10 minutes):</h1>
       <ListComponent droneData={drones} time={time} />
       <h1>Radar</h1>
+      <p>(Radar is few seconds ahead of the database)</p>
       <Radar className='radarcanvas' droneData={allDrones} />
     </div>
   );
