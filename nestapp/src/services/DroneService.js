@@ -35,7 +35,6 @@ const DroneDataObject = (droneData, time) => {
         x: droneData[drone].children['8'].value,
         y: droneData[drone].children['7'].value,
         pilotInformation: null,
-        id: null
       }
     )
   )

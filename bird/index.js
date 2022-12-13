@@ -3,6 +3,10 @@ const http = require('http')
 const express = require('express')
 const app = express()
 var morgan = require("morgan");
+const Drone = require('./models/drone.js')
+const fetch = require('./module/fetch')
+require('dotenv').config()
+
 
 
 const requestLogger = (request, response, next) => {
@@ -22,37 +26,29 @@ app.use(express.static('build'))
 morgan.token("Body", req => JSON.stringify(req.body));
 
 
-let drones = []
-
-const generateId = () => {
-const maxId = dronesTenMinutes.length > 0
-    ? Math.max(...persons.map(n => n.id))
-    : 0
-return maxId + 1
-}
-
-app.get('/api/drones', (req, res) => {
-    res.json(drones)
+app.get('/api/drones', (req, response) => {
+    fetch.getXML()
+    Drone.find({}).then(drones => {
+        response.json(drones)
+    })
 })
 
 app.post('/api/drones/', (request, response) => {
-    const body = request.body;
-    console.log(body)
-    if (drones.filter(drone => drone.serialNumber===body.serialNumber).length > 0) { 
-        objIndex = drones.findIndex((obj => obj.serialNumber == body.serialNumber));
-        drones[objIndex].lastSeen = body.lastSeen
-        if (drones[objIndex].firstSeen === null){
-            drones[objIndex].firstSeen.lastSeen = body.lastSeen
-        }
-        if (drones[objIndex].pilotInformation === null) {
-            drones[objIndex].pilotInformation = body.pilotInformation
-        }
-        drones[objIndex].timeOnList = body.timeOnList
-        console.log('updated last seen value')
-        return 0
-    }
-    drones = drones.concat(body)
-    response.json(body)
+    const arr = request.body;
+    arr.forEach(body => {
+        const drone = new Drone({
+            serialNumber: body.serialNumber,
+            closestToNest: body.closestToNest,
+            lastSeen: body.lastSeen,
+            timeOnList: body.timeOnList,
+            x: body.x,
+            y: body.y,
+            pilotInformation: body.pilotInformation,
+          })
+          drone.save().then(savedDrone => {
+            response.json(savedDrone)
+          })
+    });
 })
 
 const unknownEndpoint = (request, response) => {
@@ -60,7 +56,6 @@ const unknownEndpoint = (request, response) => {
 }
   
 app.use(unknownEndpoint)
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
