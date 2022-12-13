@@ -13,7 +13,7 @@ const ListComponent = ({droneData, time}) => { //Table listing component
                     <th>Surname</th>
                     <th>Phone number</th>
                     <th>Email</th>
-                    <th>Time since last seen</th>
+                    <th>Time since last in NDZ</th>
                 </tr>
                     {Object.keys(droneData).map(drone => 
                     <ListItem key={droneData[drone].serialNumber} droneData={droneData} drone={drone} time={time}/>

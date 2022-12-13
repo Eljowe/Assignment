@@ -3,7 +3,7 @@ const http = require('http')
 const express = require('express')
 const app = express()
 const Drone = require('./models/drone.js')
-const fetch = require('./module/fetch')
+const fetch = require('./services/fetch')
 require('dotenv').config()
 
 
