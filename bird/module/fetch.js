@@ -90,10 +90,8 @@ const updateDatabase = () => {
                         })
                     }
                 })
-                return arr;
             });
     });
-    return arr;
     
     });
 }
