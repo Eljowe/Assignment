@@ -33,24 +33,6 @@ app.get('/api/drones', (req, response) => {
     })
 })
 
-app.post('/api/drones/', (request, response) => {
-    const arr = request.body;
-    arr.forEach(body => {
-        const drone = new Drone({
-            serialNumber: body.serialNumber,
-            closestToNest: body.closestToNest,
-            lastSeen: body.lastSeen,
-            timeOnList: body.timeOnList,
-            x: body.x,
-            y: body.y,
-            pilotInformation: body.pilotInformation,
-          })
-          drone.save().then(savedDrone => {
-            response.json(savedDrone)
-          })
-    });
-})
-
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
 }

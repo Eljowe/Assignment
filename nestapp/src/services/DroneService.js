@@ -1,5 +1,4 @@
 import axios from 'axios'
-import FilterController from "./FilterController.js"
 
 const XMLDroneData = () => { //GET request to fetch drone data
   const res = axios //the XML data is fetched from custom proxy, due to CORS-policy
@@ -11,15 +10,6 @@ const XMLDroneData = () => { //GET request to fetch drone data
     return res.then(response => response.data);
 };
 
-const PilotInformation = async (serialNumber) => { //GET request to fetch pilot information
-  const res = await axios
-    .get(`https://droneproxy.fly.dev/https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
-    .catch(function (error) { 
-      console.log(error);
-      return {};
-    });
-    return await res.data;
-};
 
 
  //Creates more coherent drone object for easier data handling
@@ -29,7 +19,7 @@ const DroneDataObject = (droneData, time) => {
     obj.push(
       {
         serialNumber: droneData[drone].children['0'].value,
-        closestToNest: FilterController.distanceToNest(droneData, drone),
+        closestToNest: -1,
         lastSeen: time,
         timeOnList: null,
         x: droneData[drone].children['8'].value,
@@ -44,5 +34,4 @@ const DroneDataObject = (droneData, time) => {
 export default {
   XMLDroneData: XMLDroneData,
   DroneDataObject: DroneDataObject,
-  PilotInformation: PilotInformation
 };

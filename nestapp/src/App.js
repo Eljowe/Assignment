@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import DroneService from "./services/DroneService";
 import XMLParser from 'react-xml-parser';
 import ListComponent from "./components/List";
-import FilterController from "./services/FilterController";
 import Radar from "./components/DroneGrid";
 import RadarService from "./services/RadarService";
 import './index.css';
@@ -35,16 +34,8 @@ function App() {
     };
   }, []);
 
-
-  useEffect(() => {
-    const droneArray = FilterController.FilterAndUpdateTimeAndDistance(drones, allDrones, time)
-    
-    Object.keys(droneArray).forEach(drone => {DroneDB.addDrone(droneArray[drone])})
-  }, [allDrones, time, drones])
-
   useEffect(() => {
     DroneDB.listDrones().then(response => {
-      console.log(response)
       setDrones(response);
     })
     RadarService.setupRadar();
@@ -54,11 +45,9 @@ function App() {
   return (
     <div>
       <h1>Drones that have violated the No-fly zone (in the last 10 minutes):</h1>
-      <ListComponent droneData={drones} />
+      <ListComponent droneData={drones} time={time} />
       <h1>Radar</h1>
       <Radar className='radarcanvas' droneData={allDrones} />
-      <h2>All drones within the radar area:</h2>
-      <ListComponent droneData={allDrones}/>
     </div>
   );
 }

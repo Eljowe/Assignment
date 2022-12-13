@@ -27,14 +27,14 @@ const updateDatabase = () => {
                 //poista kaikki aika yli 10min Drone.deleteMany({timeOnList:}) ehkä vasta lopussa
                 Object.keys(arr).forEach(drone => {
                     //console.log(arr[drone])
-                    if (distanceToNest(Number(arr[drone].positionX[0]), Number(arr[drone].positionY[0]))<200000) {
+                    if (distanceToNest(Number(arr[drone].positionX[0]), Number(arr[drone].positionY[0]))<100000) {
                         
                     
                         Drone.find({serialNumber: arr[drone].serialNumber[0]})
                         .then(result => {
                             if(result.length > 0) {
                                 if (distanceToNest(Number(arr[drone].positionX[0]), Number(arr[drone].positionY[0]))<result[0].closestToNest) {
-                                    console.log('it is')
+                                    
                                     Drone.findOneAndUpdate(
                                         { serialNumber: arr[drone].serialNumber[0]}, 
                                         {
@@ -90,8 +90,18 @@ const updateDatabase = () => {
                         })
                     }
                 })
+
+                //deleting 10 minute old data
+                Drone.deleteMany({lastSeen: { $lte: (time-600000)}},{'new': true },
+                function(err, pc) {
+                    if (err) {
+                    console.log('ERROR AT UPDATE DB DRONE');
+                        throw (err);
+                    }}
+                    );
+            
             });
-    });
+        });
     
     });
 }

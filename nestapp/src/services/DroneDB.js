@@ -6,17 +6,6 @@ const listDrones = () => {
     return res.then(response => response.data);
 };
 
-const addDrone = obj => {
-    const res = axios.post(baseUrl, obj);
-    return res.then(response => response.data);
-};
-
-const deleteDrone = serialNumber => {
-    const res = axios.delete(`/api/drones/${serialNumber}`);
-    return res.then(response => response.data);
-  };
-
 export default {
     listDrones: listDrones,
-    addDrone: addDrone,
 };
